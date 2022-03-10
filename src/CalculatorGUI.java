@@ -2,10 +2,10 @@ import java.awt.*;
 import javax.swing.*;
 
 public class CalculatorGUI {
-    public static void main(String[] args) {
+    public CalculatorGUI(int defaultWidth, int defaultHeight) {
         JFrame frame = new JFrame("Calculator");
 
-        frame.setSize(300, 500);
+        frame.setSize(defaultWidth, defaultHeight);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -50,5 +50,9 @@ public class CalculatorGUI {
         frame.add(mainPanel);
 
 
+    }
+
+    public static void main(String[] args) {
+        CalculatorGUI calc = new CalculatorGUI(300, 500);
     }
 }
