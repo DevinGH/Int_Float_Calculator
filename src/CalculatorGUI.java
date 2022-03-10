@@ -19,13 +19,15 @@ public class CalculatorGUI {
         JPanel southPanel2 = new JPanel(new BorderLayout());
 
         northPanel2.setBackground(Color.black);
-        northPanel2.setBorder(new EmptyBorder(35, 5, 5, 5));
+        northPanel2.setBorder(new EmptyBorder(35, 20, 5, 20));
         northPanel2.setPreferredSize(new Dimension(width, 100));
         centerPanel2.setBackground(Color.BLUE);
         centerPanel2.setPreferredSize(new Dimension(width, 300));
         southPanel2.setBackground(Color.CYAN);
         southPanel2.setPreferredSize(new Dimension(width, 100));
 
+        JPanel radioPanel = new JPanel(new FlowLayout());
+        radioPanel.setBackground(Color.ORANGE);
 
         JPanel southEastPanel3 = new JPanel(new FlowLayout());
         JPanel southWestPanel3 = new JPanel(new BorderLayout());
@@ -39,10 +41,11 @@ public class CalculatorGUI {
         /*
         Creating Components
          */
-        JTextField display = new JTextField(50);
+        JTextField display = new JTextField(25);
         display.setPreferredSize(new Dimension(100, 40));
 
-        JRadioButton calcPower = new JRadioButton();
+        JRadioButton calcPowerON = new JRadioButton("On");
+        JRadioButton calcPowerOFF = new JRadioButton("Off");
         JButton button1 = new JButton();
         JButton button2 = new JButton();
         JButton button3 = new JButton();
@@ -66,7 +69,9 @@ public class CalculatorGUI {
          */
         northPanel2.add(display);
 
-        centerPanel2.add(calcPower);
+        radioPanel.add(calcPowerON);
+        radioPanel.add(calcPowerOFF);
+        centerPanel2.add(radioPanel);
         centerPanel2.add(button1);
         centerPanel2.add(button2);
         centerPanel2.add(button3);
@@ -101,7 +106,7 @@ public class CalculatorGUI {
         mainPanel.add(southPanel2, BorderLayout.SOUTH);
 
         frame.add(mainPanel);
-
+        frame.pack();
 
     }
 
