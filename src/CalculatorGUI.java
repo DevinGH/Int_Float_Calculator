@@ -1,14 +1,24 @@
+/**
+ * Imports
+ */
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.util.*;
 
-
+/**
+ * Class that sets up basic Calculator GUI
+ */
 public class CalculatorGUI {
     private static int width;
     private static int height;
     private static JFrame frame;
 
+    /**
+     * Constructor for GUI frame
+     * @param width
+     * @param height
+     */
     public CalculatorGUI(int width, int height) {
         this.width = width;
         this.height = height;
@@ -22,9 +32,15 @@ public class CalculatorGUI {
         this.frame = frame;
     }
 
+    /**
+     * Initializes and sets up calculator GUI
+     */
     public static void GUIInit(){
         CalculatorGUI calc = new CalculatorGUI(300, 500);
 
+        /*
+        Creating Panels and setting up properties
+         */
         JPanel mainPanel = new JPanel(new BorderLayout());
 
         JPanel northPanel2 = new JPanel(new FlowLayout());
@@ -189,6 +205,11 @@ public class CalculatorGUI {
         frame.pack();
     }
 
+    /**
+     * Main driver program
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         GUIInit();
     }
