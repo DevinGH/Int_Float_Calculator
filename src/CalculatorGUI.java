@@ -33,9 +33,11 @@ public class CalculatorGUI {
 
     /**
      * Initializes and sets up calculator GUI
+     * @param width
+     * @param height
      */
-    public static void GUIInit(){
-        CalculatorGUI calc = new CalculatorGUI(300, 500);
+    public static void GUIInit(int width, int height){
+        CalculatorGUI calc = new CalculatorGUI(width, height);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
 
@@ -57,9 +59,9 @@ public class CalculatorGUI {
          */
         JPanel northPanel2 = new JPanel(new FlowLayout());
 
-        northPanel2.setBackground(Color.black);
+        northPanel2.setBackground(Color.BLACK);
         northPanel2.setBorder(new EmptyBorder(35, 20, 10, 20));
-        northPanel2.setPreferredSize(new Dimension(width, 100));
+        northPanel2.setPreferredSize(new Dimension(width, height/5));
 
         /*
         Components for panel
@@ -83,9 +85,8 @@ public class CalculatorGUI {
         /*
         Creating Radio Panel
          */
-        JPanel radioPanel = new JPanel(new FlowLayout());
+        JPanel radioPanel = new JPanel(new GridLayout(2, 1));
         radioPanel.setBackground(Color.BLACK);
-        radioPanel.setPreferredSize(new Dimension(40, 40));
 
          /*
         Components for panel
@@ -122,7 +123,7 @@ public class CalculatorGUI {
         JPanel centerPanel2 = new JPanel(new GridLayout(4, 4, 10, 25));
 
         centerPanel2.setBackground(Color.BLACK);
-        centerPanel2.setPreferredSize(new Dimension(width, 200));
+        centerPanel2.setPreferredSize(new Dimension(width, height - 250));
         centerPanel2.setBorder(new EmptyBorder(5, 5, 10, 5));
 
         /*
@@ -196,7 +197,8 @@ public class CalculatorGUI {
          */
         JPanel swsEastPanel5 = new JPanel(new FlowLayout());
 
-        swsEastPanel5.setPreferredSize(new Dimension(75, 50));
+        swsEastPanel5.setPreferredSize(new Dimension(80, 50));
+        swsEastPanel5.setBorder(new EmptyBorder(0, 15,5 ,0));
         swsEastPanel5.setBackground(Color.BLACK);
 
         /*
@@ -225,8 +227,8 @@ public class CalculatorGUI {
         JPanel swSouthPanel4 = new JPanel(new BorderLayout());
 
         swSouthPanel4.setBackground(Color.BLACK);
-        swSouthPanel4.setPreferredSize(new Dimension(230, 50));
-        swSouthPanel4.setBorder(new EmptyBorder(0, 5, 5, 5));
+        swSouthPanel4.setPreferredSize(new Dimension(250, 50));
+        swSouthPanel4.setBorder(new EmptyBorder(0, 1, 5, 5));
 
         /*
         Adding Components to panel
@@ -278,7 +280,7 @@ public class CalculatorGUI {
          */
         JPanel southWestPanel3 = new JPanel(new BorderLayout());
 
-        southWestPanel3.setPreferredSize(new Dimension(230, 90));
+        southWestPanel3.setPreferredSize(new Dimension(225, 90));
         southWestPanel3.setBackground(Color.BLACK);
 
         /*
@@ -301,6 +303,7 @@ public class CalculatorGUI {
         JPanel southEastPanel3 = new JPanel(new FlowLayout());
 
         southEastPanel3.setPreferredSize(new Dimension(70, 90));
+        southEastPanel3.setBorder(new EmptyBorder(0, 0, 5,10));
         southEastPanel3.setBackground(Color.BLACK);
 
         /*
@@ -308,7 +311,7 @@ public class CalculatorGUI {
          */
         JButton eqButton = new JButton("=");
         eqButton.setBackground(Color.ORANGE);
-        eqButton.setPreferredSize(new Dimension(60, 90));
+        eqButton.setPreferredSize(new Dimension(70, 90));
 
         /*
         Adding Components to panel
@@ -346,6 +349,6 @@ public class CalculatorGUI {
      * @param args
      */
     public static void main(String[] args) {
-        GUIInit();
+        GUIInit(300, 500);
     }
 }
