@@ -8,10 +8,14 @@ import javax.swing.border.EmptyBorder;
 /**
  * Class that sets up basic Calculator GUI
  */
-public class CalculatorGUI {
+public class CalculatorGUI extends CalculatorBehavior {
+    /*
+    Local Variables
+     */
     private static int width;
     private static int height;
     private static JFrame frame;
+    public static JTextField display;
 
     /**
      * Constructor for GUI frame
@@ -66,8 +70,9 @@ public class CalculatorGUI {
         /*
         Components for panel
          */
-        JTextField display = new JTextField(25);
+        display = new JTextField(25);
         display.setPreferredSize(new Dimension(100, 40));
+        display.setEditable(false);
 
         /*
         Adding Components to panel
@@ -96,9 +101,16 @@ public class CalculatorGUI {
         JRadioButton calcPowerON = new JRadioButton("on");
         calcPowerON.setBackground(Color.black);
         calcPowerON.setForeground(Color.WHITE);
+        calcPowerON.addActionListener(e -> {
+            display.setText(takeAction(e));
+        });
+
         JRadioButton calcPowerOFF = new JRadioButton("off");
         calcPowerOFF.setBackground(Color.black);
         calcPowerOFF.setForeground(Color.WHITE);
+        calcPowerOFF.addActionListener(e -> {
+            display.setText(takeAction(e));
+        });
 
         group.add(calcPowerOFF);
         group.add(calcPowerON);
@@ -148,11 +160,15 @@ public class CalculatorGUI {
         /*
         Adding Components to panel
          */
+
         centerPanel2.add(radioPanel());
 
         for(int i = 0; i < calcButtonArray.length; i++){
             calcButtonArray[i].setText("" + calcOperationArray[i]);
             calcButtonArray[i].setFont(new Font("Arial", Font.BOLD, 14));
+            calcButtonArray[i].addActionListener(e -> {
+                display.setText(takeAction(e));
+            });
             centerPanel2.add(calcButtonArray[i]);
         }
 
@@ -178,6 +194,9 @@ public class CalculatorGUI {
         JButton zeroButton = new JButton("0");
 
         zeroButton.setPreferredSize(new Dimension(140, 50));
+        zeroButton.addActionListener(e -> {
+            display.setText(takeAction(e));
+        });
 
         /*
         Adding Components to panel
@@ -207,6 +226,9 @@ public class CalculatorGUI {
         JButton decimalButton = new JButton(".");
 
         decimalButton.setPreferredSize(new Dimension(65, 50));
+        decimalButton.addActionListener(e -> {
+            display.setText(takeAction(e));
+        });
 
         /*
         Adding Components to panel
@@ -257,8 +279,17 @@ public class CalculatorGUI {
         Components for panel
          */
         JButton button1 = new JButton("1");
+        button1.addActionListener(e -> {
+            display.setText(takeAction(e));
+        });
         JButton button2 = new JButton("2");
+        button2.addActionListener(e -> {
+            display.setText(takeAction(e));
+        });
         JButton button3 = new JButton("3");
+        button3.addActionListener(e -> {
+            display.setText(takeAction(e));
+        });
 
         /*
         Adding Components to panel
@@ -312,6 +343,9 @@ public class CalculatorGUI {
         JButton eqButton = new JButton("=");
         eqButton.setBackground(Color.ORANGE);
         eqButton.setPreferredSize(new Dimension(70, 90));
+        eqButton.addActionListener(e -> {
+                display.setText(takeAction(e));
+        });
 
         /*
         Adding Components to panel
