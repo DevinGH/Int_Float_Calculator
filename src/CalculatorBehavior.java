@@ -4,7 +4,7 @@ import java.util.*;
 /**
  * Class that details the behavior of the calculator
  */
-public class CalculatorBehavior {
+public abstract class CalculatorBehavior {
     /*
     Local Variabes
      */
@@ -69,10 +69,10 @@ public class CalculatorBehavior {
      */
     public static List<String> calculate(List<String> str) {
        try{
-           while(str.contains("x") || str.contains("/")){
-               str = precedence1(str);
-           }
-           while(str.contains("+") || str.contains("-")){
+           if(str.contains("+") || str.contains("-")){
+               if(str.contains("x") || str.contains("/")){
+                   str = precedence1(str);
+               }
                str = precedence2(str);
            }
        }catch(Exception e){
@@ -154,11 +154,11 @@ public class CalculatorBehavior {
     public static List<String> precedence1(List<String> list){
         for(int i = 0; i < list.size(); i++){
             if(list.get(i).equals("x")){
-                list = calcPlus(list, i);
+                list = calcMulti(list, i);
                 i -= 1;
             }
             if(list.get(i).equals("/")){
-                list = calcSubtract(list, i);
+                list = calcDivide(list, i);
                 i -= 1;
             }
         }
