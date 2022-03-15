@@ -1,4 +1,3 @@
-
 import java.awt.event.ActionEvent;
 import java.util.*;
 
@@ -69,20 +68,50 @@ public class CalculatorBehavior {
      * @return
      */
     public static List<String> calculate(List<String> str) {
-       while(str.contains("x")){
-           str = calcMulti(str);
-       }
-       while(str.contains("/")){
-           str = calcDivide(str);
-       }
-       while(str.contains("+")){
-           str = calcPlus(str);
-       }
-       while(str.contains("-")){
-           str = calcSubtract(str);
-       }
+       try{
+           while(str.contains("x") || str.contains("/")){
+               str = precedence1(str);
+           }
+           while(str.contains("+") || str.contains("-")){
+               str = precedence2(str);
+           }
+       }catch(Exception e){
+           str.clear();
+           System.out.println("Invalid Input, please try again.");
+        }
 
        return str;
+    }
+
+    /**
+     * Does specific calculation in order of PEMDAS order for addition and subtraction
+     * @param list
+     * @return
+     */
+    public static List<String> precedence2(List<String> list){
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).equals("+")){
+                list = calcPlus(list, i);
+                i -= 1;
+            }
+            if(list.get(i).equals("-")){
+                list = calcSubtract(list, i);
+                i -= 1;
+            }
+        }
+
+        return list;
+    }
+
+    /**
+     * Returns an int no matter if it is float or int
+     * @param str
+     * @return
+     */
+    public static int getNum(String str){
+        int num = Math.round(Float.parseFloat(str));
+
+        return num;
     }
 
     /**
@@ -90,18 +119,13 @@ public class CalculatorBehavior {
      * @param list
      * @return
      */
-    public static List<String> calcPlus(List<String> list){
-        String result;
-        for(int i = 0; i < list.size(); i++){
-            if(list.get(i).equals("+")){
-                result = "";
-                result += Integer.parseInt(list.get(i-1)) + Integer.parseInt(list.get(i+1));
-                list.set(i-1, result);
-                list.remove(i+1);
-                list.remove(i);
-                i -= 2;
-            }
-        }
+    public static List<String> calcPlus(List<String> list, int index){
+        String result = "";
+
+        result += getNum(list.get(index - 1)) + getNum(list.get(index + 1));
+        list.set(index - 1, result);
+        list.remove(index + 1);
+        list.remove(index);
 
         return list;
     }
@@ -111,16 +135,31 @@ public class CalculatorBehavior {
      * @param list
      * @return
      */
-    public static List<String> calcSubtract(List<String> list){
-        String result;
+    public static List<String> calcSubtract(List<String> list, int index){
+        String result = "";
+
+        result += getNum(list.get(index - 1)) - getNum(list.get(index + 1));
+        list.set(index - 1, result);
+        list.remove(index + 1);
+        list.remove(index);
+
+        return list;
+    }
+
+    /**
+     * Does specific calculation in order of PEMDAS order for multiplication and division
+     * @param list
+     * @return
+     */
+    public static List<String> precedence1(List<String> list){
         for(int i = 0; i < list.size(); i++){
-            if(list.get(i).equals("-")){
-                    result = "";
-                    result += Integer.parseInt(list.get(i-1)) - Integer.parseInt(list.get(i+1));
-                    list.set(i-1, result);
-                    list.remove(i+1);
-                    list.remove(i);
-                    i -= 2;
+            if(list.get(i).equals("x")){
+                list = calcPlus(list, i);
+                i -= 1;
+            }
+            if(list.get(i).equals("/")){
+                list = calcSubtract(list, i);
+                i -= 1;
             }
         }
 
@@ -132,18 +171,13 @@ public class CalculatorBehavior {
      * @param list
      * @return
      */
-    public static List<String> calcMulti(List<String> list){
-        String result;
-        for(int i = 0; i < list.size(); i++){
-            if(list.get(i).equals("x")){
-                result = "";
-                result += Integer.parseInt(list.get(i-1)) * Integer.parseInt(list.get(i+1));
-                list.set(i-1, result);
-                list.remove(i+1);
-                list.remove(i);
-                i -= 2;
-            }
-        }
+    public static List<String> calcMulti(List<String> list, int index){
+        String result = "";
+
+        result += getNum(list.get(index - 1)) * getNum(list.get(index + 1));
+        list.set(index - 1, result);
+        list.remove(index + 1);
+        list.remove(index);
 
         return list;
     }
@@ -153,18 +187,13 @@ public class CalculatorBehavior {
      * @param list
      * @return
      */
-    public static List<String> calcDivide(List<String> list){
-        String result;
-        for(int i = 0; i < list.size(); i++){
-            if(list.get(i).equals("/")){
-                result = "";
-                result += Integer.parseInt(list.get(i-1)) / Integer.parseInt(list.get(i+1));
-                list.set(i-1, result);
-                list.remove(i+1);
-                list.remove(i);
-                i -= 2;
-            }
-        }
+    public static List<String> calcDivide(List<String> list, int index){
+        String result = "";
+
+        result += getNum(list.get(index - 1)) / getNum(list.get(index + 1));
+        list.set(index - 1, result);
+        list.remove(index + 1);
+        list.remove(index);
 
         return list;
     }
@@ -176,8 +205,8 @@ public class CalculatorBehavior {
      */
     public static List<String> calcSqrt(List<String> list){
         String num = list.get(list.size() - 1);
-        double new_num = Math.sqrt(Double.parseDouble(num));
-        list.set(list.size() - 1, Double.toString(new_num));
+        int new_num = (int)Math.sqrt(getNum(num));
+        list.set(list.size() - 1, Integer.toString(new_num));
 
         return list;
     }
@@ -189,7 +218,7 @@ public class CalculatorBehavior {
      */
     public static List<String> calcFrac(List<String> list){
         String num = list.get(list.size() - 1);
-        int new_num = 1/Integer.parseInt(num);
+        int new_num = 1/getNum(num);
         list.set(list.size() - 1, Integer.toString(new_num));
 
         return list;
@@ -202,7 +231,7 @@ public class CalculatorBehavior {
      */
     public static List<String> calcSquared(List<String> list){
         String num = list.get(list.size() - 1);
-        int new_num = (int)Math.pow(Integer.parseInt(num), 2);
+        int new_num = (int)Math.pow(getNum(num), 2);
         list.set(list.size() - 1, Integer.toString(new_num));
 
         return list;
@@ -293,9 +322,9 @@ public class CalculatorBehavior {
      * @return
      */
     public static boolean checkNegative(List<String> list){
-        if(list.get(0).equals("-")){
+        if(Arrays.asList(CALC_OPERATORS).contains(list.get(0))){
             isNegative = true;
-        }else if(list.size() >= 2 && list.get(list.size() - 2).equals("-")){
+        }else if(list.size() >= 2 && Arrays.asList(CALC_OPERATORS).contains(list.get(list.size() - 2))){
             isNegative = true;
         }else{
             isNegative = false;
