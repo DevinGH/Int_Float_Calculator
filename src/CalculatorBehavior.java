@@ -8,66 +8,21 @@ public abstract class CalculatorBehavior {
     /*
     Local Variabes
      */
-    private static List<String> inputList = new ArrayList<String>();
-    private static String[] CALC_NUM = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
-    private static String[] CALC_OPERATORS = {"+", "-", "x", "/", "."};
-    private static boolean calcPower;
-    private static boolean isNegative = false;
-    private static boolean isDecimal = false;
+    protected static List<String> inputList = new ArrayList<String>();
+    protected static String[] CALC_NUM = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
+    protected static String[] CALC_OPERATORS = {"+", "-", "x", "/", "."};
+    protected static boolean calcPower;
+    protected static boolean isNegative = false;
+    protected static boolean isDecimal = false;
 
-    /**
-     * Uses the ActionEvent to determine what to do with the calculator
-     * @param e
-     * @return
-     */
-    public static String takeAction(ActionEvent e) {
-        powerController(e);
-        while(calcPower){
-            /*
-            Checks to see what value has been inputted
-            */
-            if(Arrays.asList(CALC_NUM).contains(e.getActionCommand())){
-                if(!isNegative){
-                    addInput(e);
-                }else {
-                    inputList = addIfNegative(e, inputList);
-                    testPrint(inputList);
-                }
-            }else if(Arrays.asList(CALC_OPERATORS).contains(e.getActionCommand())){
-                addOperator(e);
 
-            }else {
-                doOperator(e);
-            }
-
-            /*
-            Returns the full string to set on the display
-            */
-            return printEquation(inputList);
-        }
-        return printEquation(inputList);
-    }
-
-    /**
-     * Takes the list and creates a full string
-     * @param list
-     * @return
-     */
-    public static String printEquation(List<String> list){
-        String output = "";
-        for(String str: list){
-            output += str;
-        }
-
-        return output;
-    }
 
     /**
      * Uses the list to perform proper PEMDAS
      * @param str
      * @return
      */
-    public static List<String> calculate(List<String> str) {
+    protected static List<String> calculate(List<String> str) {
        try{
            if(str.contains("+") || str.contains("-")){
                if(str.contains("x") || str.contains("/")){
@@ -88,7 +43,7 @@ public abstract class CalculatorBehavior {
      * @param list
      * @return
      */
-    public static List<String> precedence2(List<String> list){
+    protected static List<String> precedence2(List<String> list){
         for(int i = 0; i < list.size(); i++){
             if(list.get(i).equals("+")){
                 list = calcPlus(list, i);
@@ -108,8 +63,8 @@ public abstract class CalculatorBehavior {
      * @param str
      * @return
      */
-    public static int getNum(String str){
-        int num = Math.round(Float.parseFloat(str));
+    protected static float getNum(String str){
+        float num = Float.parseFloat(str);
 
         return num;
     }
@@ -119,7 +74,7 @@ public abstract class CalculatorBehavior {
      * @param list
      * @return
      */
-    public static List<String> calcPlus(List<String> list, int index){
+    protected static List<String> calcPlus(List<String> list, int index){
         String result = "";
 
         result += getNum(list.get(index - 1)) + getNum(list.get(index + 1));
@@ -135,7 +90,7 @@ public abstract class CalculatorBehavior {
      * @param list
      * @return
      */
-    public static List<String> calcSubtract(List<String> list, int index){
+    protected static List<String> calcSubtract(List<String> list, int index){
         String result = "";
 
         result += getNum(list.get(index - 1)) - getNum(list.get(index + 1));
@@ -151,7 +106,7 @@ public abstract class CalculatorBehavior {
      * @param list
      * @return
      */
-    public static List<String> precedence1(List<String> list){
+    protected static List<String> precedence1(List<String> list){
         for(int i = 0; i < list.size(); i++){
             if(list.get(i).equals("x")){
                 list = calcMulti(list, i);
@@ -171,7 +126,7 @@ public abstract class CalculatorBehavior {
      * @param list
      * @return
      */
-    public static List<String> calcMulti(List<String> list, int index){
+    protected static List<String> calcMulti(List<String> list, int index){
         String result = "";
 
         result += getNum(list.get(index - 1)) * getNum(list.get(index + 1));
@@ -187,7 +142,7 @@ public abstract class CalculatorBehavior {
      * @param list
      * @return
      */
-    public static List<String> calcDivide(List<String> list, int index){
+    protected static List<String> calcDivide(List<String> list, int index){
         String result = "";
 
         result += getNum(list.get(index - 1)) / getNum(list.get(index + 1));
@@ -203,10 +158,10 @@ public abstract class CalculatorBehavior {
      * @param list
      * @return
      */
-    public static List<String> calcSqrt(List<String> list){
+    protected static List<String> calcSqrt(List<String> list){
         String num = list.get(list.size() - 1);
-        int new_num = (int)Math.sqrt(getNum(num));
-        list.set(list.size() - 1, Integer.toString(new_num));
+        float new_num = (float)Math.sqrt(getNum(num));
+        list.set(list.size() - 1, Float.toString(new_num));
 
         return list;
     }
@@ -216,10 +171,10 @@ public abstract class CalculatorBehavior {
      * @param list
      * @return
      */
-    public static List<String> calcFrac(List<String> list){
+    protected static List<String> calcFrac(List<String> list){
         String num = list.get(list.size() - 1);
-        int new_num = 1/getNum(num);
-        list.set(list.size() - 1, Integer.toString(new_num));
+        float new_num = 1/getNum(num);
+        list.set(list.size() - 1, Float.toString(new_num));
 
         return list;
     }
@@ -229,10 +184,10 @@ public abstract class CalculatorBehavior {
      * @param list
      * @return
      */
-    public static List<String> calcSquared(List<String> list){
+    protected static List<String> calcSquared(List<String> list){
         String num = list.get(list.size() - 1);
-        int new_num = (int)Math.pow(getNum(num), 2);
-        list.set(list.size() - 1, Integer.toString(new_num));
+        float new_num = (float)Math.pow(getNum(num), 2);
+        list.set(list.size() - 1, Float.toString(new_num));
 
         return list;
     }
@@ -241,7 +196,7 @@ public abstract class CalculatorBehavior {
      * Adds inputted number to list in appropriate place
      * @param e
      */
-    public static void addInput(ActionEvent e){
+    protected static void addInput(ActionEvent e){
         if(!isDecimal){
             if(inputList.size() >= 1  && !Arrays.asList(CALC_OPERATORS).contains(inputList.get(inputList.size() - 1))){
                 inputList.set(inputList.size() - 1, inputList.get(inputList.size() - 1) + e.getActionCommand());
@@ -260,7 +215,7 @@ public abstract class CalculatorBehavior {
      * Adds operator in appropriate place
      * @param e
      */
-    public static void addOperator(ActionEvent e){
+    protected static void addOperator(ActionEvent e){
         if(e.getActionCommand().equals("-")){
             inputList.add(e.getActionCommand());
             checkNegative(inputList);
@@ -278,7 +233,7 @@ public abstract class CalculatorBehavior {
      * If the current index is a decimal number, add the inputted number onto to that decimal chain
      * @param e
      */
-    public static void ifDecimal(ActionEvent e){
+    protected static void ifDecimal(ActionEvent e){
         inputList.set(inputList.size() - 1, inputList.get(inputList.size() - 1) + e.getActionCommand());
     }
 
@@ -286,7 +241,7 @@ public abstract class CalculatorBehavior {
      * Performs specific operation chosen by user
      * @param e
      */
-    public static void doOperator(ActionEvent e){
+    protected static void doOperator(ActionEvent e){
         if(e.getActionCommand().equals("\u221A")){
             inputList = calcSqrt(inputList);
         }else if(e.getActionCommand().equals("1/x")){
@@ -308,7 +263,7 @@ public abstract class CalculatorBehavior {
      * @param list
      * @return
      */
-    public static List<String> addIfNegative(ActionEvent e, List<String> list){
+    protected static List<String> addIfNegative(ActionEvent e, List<String> list){
         String prev = list.get(list.size() - 1);
         String after = prev + e.getActionCommand();
         list.set(list.size() - 1, after);
@@ -321,7 +276,7 @@ public abstract class CalculatorBehavior {
      * @param list
      * @return
      */
-    public static boolean checkNegative(List<String> list){
+    protected static boolean checkNegative(List<String> list){
         if(Arrays.asList(CALC_OPERATORS).contains(list.get(0))){
             isNegative = true;
         }else if(list.size() >= 2 && Arrays.asList(CALC_OPERATORS).contains(list.get(list.size() - 2))){
@@ -336,7 +291,7 @@ public abstract class CalculatorBehavior {
     /**
      * Completely clears and resets all variables
      */
-    public static void clear(){
+    protected static void clear(){
         inputList.clear();
         isNegative = false;
         isDecimal = false;
@@ -345,7 +300,7 @@ public abstract class CalculatorBehavior {
     /**
      * Deletes the previous term in the list
      */
-    public static void delete(){
+    protected static void delete(){
         inputList.remove(inputList.size() - 1);
     }
 
@@ -353,7 +308,7 @@ public abstract class CalculatorBehavior {
      * Controls whether the calculator is on or off
      * @param e
      */
-    public static void powerController(ActionEvent e){
+    protected static void powerController(ActionEvent e){
         if(e.getActionCommand().equals("off")){
             calcPower = false;
             inputList.clear();
@@ -367,7 +322,7 @@ public abstract class CalculatorBehavior {
     /*
     Used to check errors in list
      */
-    public static void testPrint(List<String> list){
+    protected static void testPrint(List<String> list){
         for(String s: list){
             System.out.print(s + ",");
         }

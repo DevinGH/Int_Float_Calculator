@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder;
 /**
  * Class that sets up basic Calculator GUI
  */
-public class CalculatorGUI extends CalculatorBehavior {
+public class IntCalculatorGUI extends IntCalculatorBehavior {
     /*
     Local Variables
      */
@@ -17,14 +17,16 @@ public class CalculatorGUI extends CalculatorBehavior {
     private static JFrame frame;
     public static JTextField display;
 
+    public static void main(String[] args) {
+        GUIInit();
+    }
+
     /**
      * Constructor for GUI frame
-     * @param width
-     * @param height
      */
-    public CalculatorGUI(int width, int height) {
-        this.width = width;
-        this.height = height;
+    public IntCalculatorGUI() {
+        this.width = 300;
+        this.height = 500;
 
         JFrame frame = new JFrame("Calculator");
 
@@ -37,11 +39,9 @@ public class CalculatorGUI extends CalculatorBehavior {
 
     /**
      * Initializes and sets up calculator GUI
-     * @param width
-     * @param height
      */
-    public static void GUIInit(int width, int height){
-        CalculatorGUI calc = new CalculatorGUI(width, height);
+    public static JFrame GUIInit(){
+        IntCalculatorGUI calc = new IntCalculatorGUI();
 
         JPanel mainPanel = new JPanel(new BorderLayout());
 
@@ -51,6 +51,8 @@ public class CalculatorGUI extends CalculatorBehavior {
 
         frame.add(mainPanel);
         frame.pack();
+
+        return frame;
     }
 
     /**
@@ -102,14 +104,14 @@ public class CalculatorGUI extends CalculatorBehavior {
         calcPowerON.setBackground(Color.black);
         calcPowerON.setForeground(Color.WHITE);
         calcPowerON.addActionListener(e -> {
-            display.setText(takeAction(e));
+            display.setText(takeIntAction(e));
         });
 
         JRadioButton calcPowerOFF = new JRadioButton("off");
         calcPowerOFF.setBackground(Color.black);
         calcPowerOFF.setForeground(Color.WHITE);
         calcPowerOFF.addActionListener(e -> {
-            display.setText(takeAction(e));
+            display.setText(takeIntAction(e));
         });
 
         group.add(calcPowerOFF);
@@ -167,7 +169,7 @@ public class CalculatorGUI extends CalculatorBehavior {
             calcButtonArray[i].setText("" + calcOperationArray[i]);
             calcButtonArray[i].setFont(new Font("Arial", Font.BOLD, 14));
             calcButtonArray[i].addActionListener(e -> {
-                display.setText(takeAction(e));
+                display.setText(takeIntAction(e));
             });
             centerPanel2.add(calcButtonArray[i]);
         }
@@ -195,7 +197,7 @@ public class CalculatorGUI extends CalculatorBehavior {
 
         zeroButton.setPreferredSize(new Dimension(140, 50));
         zeroButton.addActionListener(e -> {
-            display.setText(takeAction(e));
+            display.setText(takeIntAction(e));
         });
 
         /*
@@ -227,7 +229,7 @@ public class CalculatorGUI extends CalculatorBehavior {
 
         decimalButton.setPreferredSize(new Dimension(65, 50));
         decimalButton.addActionListener(e -> {
-            display.setText(takeAction(e));
+            display.setText(takeIntAction(e));
         });
 
         /*
@@ -280,15 +282,15 @@ public class CalculatorGUI extends CalculatorBehavior {
          */
         JButton button1 = new JButton("1");
         button1.addActionListener(e -> {
-            display.setText(takeAction(e));
+            display.setText(takeIntAction(e));
         });
         JButton button2 = new JButton("2");
         button2.addActionListener(e -> {
-            display.setText(takeAction(e));
+            display.setText(takeIntAction(e));
         });
         JButton button3 = new JButton("3");
         button3.addActionListener(e -> {
-            display.setText(takeAction(e));
+            display.setText(takeIntAction(e));
         });
 
         /*
@@ -344,7 +346,7 @@ public class CalculatorGUI extends CalculatorBehavior {
         eqButton.setBackground(Color.ORANGE);
         eqButton.setPreferredSize(new Dimension(70, 90));
         eqButton.addActionListener(e -> {
-                display.setText(takeAction(e));
+            display.setText(takeIntAction(e));
         });
 
         /*
@@ -377,12 +379,4 @@ public class CalculatorGUI extends CalculatorBehavior {
         return southPanel2;
     }
 
-    /**
-     * Main driver program
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        GUIInit(300, 500);
-    }
 }
