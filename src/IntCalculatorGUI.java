@@ -31,7 +31,7 @@ public class IntCalculatorGUI extends IntCalculatorBehavior {
         JFrame frame = new JFrame("Calculator");
 
         frame.setSize(width, height);
-        frame.setVisible(true);
+        frame.setVisible(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.frame = frame;
@@ -40,7 +40,7 @@ public class IntCalculatorGUI extends IntCalculatorBehavior {
     /**
      * Initializes and sets up calculator GUI
      */
-    public static JFrame GUIInit(){
+    protected static JPanel GUIInit(){
         IntCalculatorGUI calc = new IntCalculatorGUI();
 
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -52,7 +52,7 @@ public class IntCalculatorGUI extends IntCalculatorBehavior {
         frame.add(mainPanel);
         frame.pack();
 
-        return frame;
+        return mainPanel;
     }
 
     /**

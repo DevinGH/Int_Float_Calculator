@@ -31,7 +31,7 @@ public class FloatCalculatorGUI extends FloatCalculatorBehavior {
         JFrame frame = new JFrame("Calculator");
 
         frame.setSize(width, height);
-        frame.setVisible(true);
+        frame.setVisible(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.frame = frame;
@@ -40,7 +40,7 @@ public class FloatCalculatorGUI extends FloatCalculatorBehavior {
     /**
      * Initializes and sets up calculator GUI
      */
-    public static JFrame GUIInit(){
+    public static JPanel GUIInit(){
         FloatCalculatorGUI calc = new FloatCalculatorGUI();
 
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -52,7 +52,7 @@ public class FloatCalculatorGUI extends FloatCalculatorBehavior {
         frame.add(mainPanel);
         frame.pack();
 
-        return frame;
+        return mainPanel;
     }
 
     /**

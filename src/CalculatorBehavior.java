@@ -15,8 +15,6 @@ public abstract class CalculatorBehavior {
     protected static boolean isNegative = false;
     protected static boolean isDecimal = false;
 
-
-
     /**
      * Uses the list to perform proper PEMDAS
      * @param str
@@ -24,10 +22,11 @@ public abstract class CalculatorBehavior {
      */
     protected static List<String> calculate(List<String> str) {
        try{
-           if(str.contains("+") || str.contains("-")){
-               if(str.contains("x") || str.contains("/")){
-                   str = precedence1(str);
-               }
+           while(str.contains("x") || str.contains("/")){
+               str = precedence1(str);
+           }
+           while(str.contains("+") || str.contains("-")){
+
                str = precedence2(str);
            }
        }catch(Exception e){
@@ -77,7 +76,7 @@ public abstract class CalculatorBehavior {
     protected static List<String> calcPlus(List<String> list, int index){
         String result = "";
 
-        result += getNum(list.get(index - 1)) + getNum(list.get(index + 1));
+        result += getResult(getNum(list.get(index - 1)), getNum(list.get(index + 1)), "plus");
         list.set(index - 1, result);
         list.remove(index + 1);
         list.remove(index);
@@ -93,7 +92,7 @@ public abstract class CalculatorBehavior {
     protected static List<String> calcSubtract(List<String> list, int index){
         String result = "";
 
-        result += getNum(list.get(index - 1)) - getNum(list.get(index + 1));
+        result += getResult(getNum(list.get(index - 1)), getNum(list.get(index + 1)), "minus");
         list.set(index - 1, result);
         list.remove(index + 1);
         list.remove(index);
@@ -109,6 +108,7 @@ public abstract class CalculatorBehavior {
     protected static List<String> precedence1(List<String> list){
         for(int i = 0; i < list.size(); i++){
             if(list.get(i).equals("x")){
+                System.out.println("got here");
                 list = calcMulti(list, i);
                 i -= 1;
             }
@@ -129,7 +129,7 @@ public abstract class CalculatorBehavior {
     protected static List<String> calcMulti(List<String> list, int index){
         String result = "";
 
-        result += getNum(list.get(index - 1)) * getNum(list.get(index + 1));
+        result += getResult(getNum(list.get(index - 1)), getNum(list.get(index + 1)), "multiply");
         list.set(index - 1, result);
         list.remove(index + 1);
         list.remove(index);
@@ -145,7 +145,7 @@ public abstract class CalculatorBehavior {
     protected static List<String> calcDivide(List<String> list, int index){
         String result = "";
 
-        result += getNum(list.get(index - 1)) / getNum(list.get(index + 1));
+        result += getResult(getNum(list.get(index - 1)), getNum(list.get(index + 1)), "divide");
         list.set(index - 1, result);
         list.remove(index + 1);
         list.remove(index);
@@ -326,6 +326,24 @@ public abstract class CalculatorBehavior {
         for(String s: list){
             System.out.print(s + ",");
         }
+    }
+
+    public static float getResult(float f1, float f2, String str){
+        float result = 0;
+        if(str.equals("plus")){
+            result += f1 + f2;
+        }
+        if(str.equals("minus")){
+            result +=  f1 - f2;
+        }
+        if(str.equals("multiply")){
+            result +=  f1 * f2;
+        }
+        if(str.equals("divide")){
+            result +=  f1 / f2;
+        }
+
+        return result;
     }
 
 }

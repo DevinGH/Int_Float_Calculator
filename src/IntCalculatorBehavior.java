@@ -44,6 +44,7 @@ public class IntCalculatorBehavior extends CalculatorBehavior{
         String output = "";
         for(String str: list){
             if(checkNum(str)){
+                System.out.println("Str = " + str);
                 output += Math.round(Float.parseFloat(str));
             }else{
                 output += str;
@@ -54,11 +55,19 @@ public class IntCalculatorBehavior extends CalculatorBehavior{
     }
 
     private static boolean checkNum(String str){
-        if(str.matches("\\d+")){
+        try{
+            Integer.parseInt(str);
             return true;
-        }else{
-            return false;
+        }catch(NumberFormatException e){
+            try{
+                Float.parseFloat(str);
+                return true;
+            }catch(NumberFormatException n){
+                return false;
+            }
         }
 
     }
+
+
 }

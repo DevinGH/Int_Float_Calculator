@@ -1,40 +1,39 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class CalcMenu {
     public static void main(String[] args) {
-        calcMenu();
+        basicFrame();
     }
 
-    public static JFrame calcMenu(){
-        JFrame intFrame = basicFrame();
+    public static void calcMenu(Container pane){
+        JTabbedPane mainGUI = new JTabbedPane();
 
-        JMenuBar menuBar = new JMenuBar();
+        mainGUI.setPreferredSize(new Dimension(300, 500));
 
-        JMenu intMenu = new JMenu("Int Calculator");
-        JMenu floatMenu = new JMenu("Float Calculator");
+        JPanel intPanel = IntCalculatorGUI.GUIInit();
+        intPanel.setPreferredSize(new Dimension(300, 500));
+        JPanel floatPanel = FloatCalculatorGUI.GUIInit();
+        floatPanel.setPreferredSize(new Dimension(300, 500));
 
-        intMenu.addSeparator();
-        //intMenu.addActionListener(e -> GUIInit());
+        mainGUI.addTab("Int Calculator", intPanel);
+        mainGUI.addTab("Float Calculator", floatPanel);
 
-        menuBar.add(intMenu);
-        menuBar.add(floatMenu);
-
-        intFrame.setJMenuBar(menuBar);
-
-        return intFrame;
+        pane.add(mainGUI, BorderLayout.CENTER);
     }
 
-    public static JFrame basicFrame(){
+    public static void basicFrame(){
         int width = 300;
         int height = 500;
 
         JFrame frame = new JFrame("Calculator");
 
         frame.setSize(width, height);
-        frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.pack();
 
-        return frame;
+        CalcMenu.calcMenu(frame.getContentPane());
+
+        frame.setVisible(true);
+        frame.pack();
     }
 }
