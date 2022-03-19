@@ -1,4 +1,5 @@
 import java.awt.event.ActionEvent;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class IntCalculatorBehavior extends CalculatorBehavior{
@@ -67,6 +68,23 @@ public class IntCalculatorBehavior extends CalculatorBehavior{
             }
         }
 
+    }
+
+    /**
+     * Adds operator in appropriate place
+     * @param e
+     */
+    protected static void addOperator(ActionEvent e){
+        if(e.getActionCommand().equals("-")){
+            inputList.add(e.getActionCommand());
+            checkNegative(inputList);
+        }else if(e.getActionCommand().equals(".")){
+            System.out.println("Decimals not required for Int Calculator");
+        }else {
+            isNegative = false;
+            isDecimal = false;
+            inputList.add(e.getActionCommand());
+        }
     }
 
 
