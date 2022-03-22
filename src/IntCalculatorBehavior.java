@@ -1,5 +1,4 @@
 import java.awt.event.ActionEvent;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class IntCalculatorBehavior extends CalculatorBehavior{
